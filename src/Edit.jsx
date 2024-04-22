@@ -1,24 +1,22 @@
 import React, {useState} from 'react'
 
 
-function Modal({ closeModal, addTask}) {
+function Edit({ closeModal, saveChanges}) {
     
-    const [newTask, setnewTask] = useState ([]);
+    const [updateTask, setupdateTask] = useState ([]);
 
-    const taskInputHandler = e => {
-        setnewTask((prev) => ({
-            ...prev,
-            [e.target.name]: e.target.value
-        }));
-    };
-     
+const prev = {
+    title: 'test title',
+    desc: 'test desc',
+    date: 'test date'
+};
 
     
   return (
     <div>
         <div className='bg-sky-600 flex flex-col justify-center content-center align-cente w-[600px] h-[500px] rounded-[15px] fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-65%]'>
             <div className='bg-transparent text-center'>
-                <h1 className='bg-transparent text-[40px] font-bold mt-[25px]'>New Task</h1>
+                <h1 className='bg-transparent text-[40px] font-bold mt-[25px]'>Edit Task</h1>
             </div>
             <div className='bg-transparent self-center mt-[25px]'>
                 <p className='bg-transparent text-[20px]'>Title: </p>
@@ -26,10 +24,9 @@ function Modal({ closeModal, addTask}) {
                 <input 
                     type="text" 
                     name="title" 
-                    value={newTask.title} 
-                    onChange={taskInputHandler} 
-                    placeholder="Task title" 
-                    autoComplete="off"
+                    value={updateTask.title} 
+                    // onChange={} 
+                    placeholder={prev.title} 
                     required
                     className='bg-white w-[300px] rounded-[5px] text-black'  
                 />
@@ -39,10 +36,9 @@ function Modal({ closeModal, addTask}) {
                 <input 
                     type="text" 
                     name="desc" 
-                    value={newTask.desc} 
-                    onChange={taskInputHandler} 
-                    placeholder="Description" 
-                    autoComplete="off"
+                    value={updateTask.desc} 
+                    // onChange={} 
+                    placeholder={prev.desc} 
                     required
                     className='bg-white w-[300px] rounded-[5px] text-black'
                 />
@@ -52,17 +48,17 @@ function Modal({ closeModal, addTask}) {
                 <input 
                     type="datetime-local" 
                     name="date" 
-                    value={newTask.date} 
-                    onChange={taskInputHandler} 
+                    value={updateTask.date} 
+                    // onChange={taskInputHandler} 
                     id="date" 
-                    autoComplete="off"
+                    placeholder={prev.date}
                     required
                     className='bg-white w-[300px] rounded-[5px] text-black'
                 />
 
             </div>
             <div className='bg-transparent self-center mt-[25px]'>
-                <button onClick={() => addTask(newTask)} className='w-[100px] h-[50px] bg-green-400 rounded-full mr-[20px]'>+ Add task</button>
+                <button onClick={() => saveChanges(newTask)} className='w-[100px] h-[50px] bg-green-400 rounded-full mr-[20px]'>Save Changes</button>
                 <button onClick={()=>{closeModal(false);}} className='w-[100px] h-[50px] bg-red-400 rounded-full'>Cancel</button>
             </div>
         </div>
@@ -70,4 +66,4 @@ function Modal({ closeModal, addTask}) {
   )
 }
 
-export default Modal
+export default Edit

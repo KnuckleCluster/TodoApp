@@ -1,22 +1,39 @@
 import React, { useState } from 'react';
 import Modal from './Modal';
+import Edit from './Edit';
+
 
 
 function App(){
 
   const [openModal, setOpenModal] = useState(false);
   const [taskList, setTaskList] = useState([]);
-
+  const [updateTaskModal, setupdateTaskModal] = useState(false);
 
   const newtaskHandler = (newTask) => {
-    setTaskList(prev => [...prev, newTask]);
-    setOpenModal(false);
+      setTaskList(prev => [...prev, newTask]);
+      setOpenModal(false);
   };
 
 
-  const Check = () => {
-    console.log(taskList)
-  };
+  const deleteTask = (index) => {
+    const updatedTask = taskList.filter((_, i) => i !== index);
+    setTaskList(updatedTask);
+  }
+  const editTask = (index) => {
+    
+  }
+
+  const showAll = (index) => {
+
+  }
+  const Pending = (index) => {
+
+  }
+  const Finished = (index) => {
+
+  }
+ 
 
   return (
     <>
@@ -48,13 +65,13 @@ function App(){
                     <p className='mt-[25px] text-[20px]'>{task.title}</p>
                     <p>{task.desc}</p>
                     <p className='mt-auto text-[15px]'>{task.date}</p>
-                    <div className='flex flex-row self-center'>
-                      <input type="checkbox" name="isDone" id="isDone" />
-                      <p>Mark as Done</p>
+                    <div className='flex flex-row self-center bg-transparent '>
+                      <input type="checkbox" name="isDone" id="isDone" className='bg-transparent'/>
+                      <p className='bg-transparent ml-[10px]'>Mark as Done</p>
                     </div>
-                    <div className='mt-auto mb-[15px]'>
-                      <button className='mr-[10px] w-[75px] h-[30px] bg-sky-600 rounded-full'>edit</button>
-                      <button className='w-[75px] h-[30px] bg-red-600 rounded-full'>delete</button>
+                    <div className='mt-auto mb-[15px] bg-transparent'>
+                      <button onClick={()=>{setupdateTaskModal(true);}} className='mr-[10px] w-[75px] h-[30px] bg-sky-600 rounded-full overflow-hidden'>edit</button>
+                      <button onClick={() => deleteTask(index)} className='w-[75px] h-[30px] bg-red-600 rounded-full overflow-hidden'>delete</button>
                     </div>
                   </div>
                 ))}
@@ -64,7 +81,8 @@ function App(){
           
         </div>
       </main>
-      {openModal && <Modal closeModal={() => setOpenModal(false)} addTask = {newtaskHandler} checkarray ={Check} />}
+      {openModal && <Modal closeModal={() => setOpenModal(false)} addTask = {newtaskHandler} />}
+      {updateTaskModal && <Edit closeModal={() => setupdateTaskModal(false)} updateTask = {editTask} />}
 
     </>
   )
