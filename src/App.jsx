@@ -5,35 +5,53 @@ import Edit from './Edit';
 
 
 function App(){
-
+  const [updateTaskModal, setupdateTaskModal] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [taskList, setTaskList] = useState([]);
-  const [updateTaskModal, setupdateTaskModal] = useState(false);
+  const [checked, setChecked] = useState(false);
+  let idnumber = taskList.length +1;
 
-  const newtaskHandler = (newTask) => {
-      setTaskList(prev => [...prev, newTask]);
-      setOpenModal(false);
-  };
+  const handleStatus = (checked) => {
+    const updatedStatus = taskList.map((e, id) => i = !checked)
+    setChecked(updatedStatus)
+  }
+  
 
+  const addTask = (newTask) => {
+    setTaskList(prev => [...prev, newTask]);
+    setOpenModal(false);
+  }
 
+  
   const deleteTask = (index) => {
     const updatedTask = taskList.filter((_, i) => i !== index);
     setTaskList(updatedTask);
   }
-  const editTask = (index) => {
-    
-  }
 
-  const showAll = (index) => {
+  // for edit
 
-  }
-  const Pending = (index) => {
+  const setForEdit = (index) => {
+    const updatedTaskList = [...taskList];
+    updatedTaskList[index].forEdit = true;
+    setTaskList(updatedTaskList);
+    setupdateTaskModal(true);
+  };
 
-  }
-  const Finished = (index) => {
+  const getSelectedTask = () => {
+    return taskList.find(task => task.forEdit);
+  };
 
+  const updateTask = (updatedTask) => {
+    const updatedTaskList = [...taskList];
+    const index = updatedTaskList.findIndex(task => task.forEdit);
+    updatedTaskList[index] = updatedTask;
+    setTaskList(updatedTaskList);
+  };
+
+
+  function checkArray(){
+    console.log(taskList);
   }
- 
 
   return (
     <>
@@ -66,11 +84,12 @@ function App(){
                     <p>{task.desc}</p>
                     <p className='mt-auto text-[15px]'>{task.date}</p>
                     <div className='flex flex-row self-center bg-transparent '>
-                      <input type="checkbox" name="isDone" id="isDone" className='bg-transparent'/>
+                      <input type="checkbox" name="isDone" id="isDone" checked={task.status} onChange={handleStatus} className='bg-transparent'/>
                       <p className='bg-transparent ml-[10px]'>Mark as Done</p>
                     </div>
                     <div className='mt-auto mb-[15px] bg-transparent'>
-                      <button onClick={()=>{setupdateTaskModal(true);}} className='mr-[10px] w-[75px] h-[30px] bg-sky-600 rounded-full overflow-hidden'>edit</button>
+                      <button onClick={checkArray} className='w-[75px] h-[30px] bg-red-600 rounded-full overflow-hidden'>Check mate</button>
+                      <button onClick={() => setForEdit(index)} className='mr-[10px] w-[75px] h-[30px] bg-sky-600 rounded-full overflow-hidden'>edit</button>
                       <button onClick={() => deleteTask(index)} className='w-[75px] h-[30px] bg-red-600 rounded-full overflow-hidden'>delete</button>
                     </div>
                   </div>
@@ -81,8 +100,8 @@ function App(){
           
         </div>
       </main>
-      {openModal && <Modal closeModal={() => setOpenModal(false)} addTask = {newtaskHandler} />}
-      {updateTaskModal && <Edit closeModal={() => setupdateTaskModal(false)} updateTask = {editTask} />}
+      {openModal && <Modal closeModal={() => setOpenModal(false)}       newid={idnumber}      addTask={addTask}/>}
+      {updateTaskModal && <Edit closeModal={() => setupdateTaskModal(false)}  selectedTask={getSelectedTask} updateTask={updateTask}/>}
 
     </>
   )

@@ -1,9 +1,16 @@
 import React, {useState} from 'react'
 
 
-function Modal({ closeModal, addTask}) {
-    
-    const [newTask, setnewTask] = useState ([]);
+function Modal({ closeModal, newid, addTask}) {
+    const [newTask,setnewTask] = useState({
+        id: newid,
+        title:'',
+        desc:'',
+        date:'',
+        status: false,
+        forEdit: false
+    });
+
 
     const taskInputHandler = e => {
         setnewTask((prev) => ({
@@ -11,7 +18,7 @@ function Modal({ closeModal, addTask}) {
             [e.target.name]: e.target.value
         }));
     };
-     
+
 
     
   return (
