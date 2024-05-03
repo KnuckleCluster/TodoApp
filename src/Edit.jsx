@@ -1,14 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
+const Edit = ({ selectedTask, updateTask, closeModal }) => {
+  // Initialize state for edited values
+  const [editedTitle, setEditedTitle] = useState('');
+  const [editedDesc, setEditedDesc] = useState('');
+  const [editedDate, setEditedDate] = useState('');
 
+  // Store the initial values of id and status
+  const taskIdHolder = useRef(selectedTask.id);
+  const taskStatusHolder = useRef(selectedTask.status);
 
+  // Update state when selectedTask changes
+  useEffect(() => {
+    if (selectedTask) {
+      setEditedTitle(selectedTask.title || '');
+      setEditedDesc(selectedTask.desc || '');
+      setEditedDate(selectedTask.date || '');
 
-function Edit({ selectedTask, updateTask, closeModal }) {
-  const [editedTitle, setEditedTitle] = useState(selectedTask.title || '');
-  const [editedDesc, setEditedDesc] = useState(selectedTask.desc || '');
-  const [editedDate, setEditedDate] = useState(selectedTask.date || '');
-  const [editedId, setEditedId]= useState(selectedTask.id);
-  const [editedStatus,setEditedStatus] = useState(selectedTask.status);
+      taskIdHolder.current = selectedTask.id;
+      taskStatusHolder.current = selectedTask.status;
+    }
+  }, [selectedTask]);
 
   const handleTitleChange = (e) => {
     setEditedTitle(e.target.value);
@@ -22,25 +34,20 @@ function Edit({ selectedTask, updateTask, closeModal }) {
     setEditedDate(e.target.value);
   };
 
-  const retainid = () => {
-    setEditedId(selectedTask.id);
-  }
-
   const saveChanges = () => {
     // Create an updated task object with edited values
     const updatedTask = {
-      id: editedId, // Retain the original id
+      id: taskIdHolder.current,
       title: editedTitle,
       desc: editedDesc,
       date: editedDate,
-      status: editedStatus, // Retain the original status
+      status: taskStatusHolder.current
     };
     // Update the task in the task list with the updated task object
     updateTask(updatedTask);
     // Close the modal
     closeModal();
   };
-  
 
   return (
     <div>
