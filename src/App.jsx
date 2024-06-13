@@ -93,7 +93,6 @@ function App() {
                     <p className='bg-transparent ml-[10px]'>Mark as Done</p>
                   </div>
                   <div className='mt-auto mb-[15px] bg-transparent'>
-                    <button onClick={() => console.log(taskList)} className='w-[75px] h-[30px] bg-red-600 rounded-full overflow-hidden'>Check mate</button>
                     <button onClick={() => { setUpdateTaskModal(true); setEditIndex(index); }} className='mr-[10px] w-[75px] h-[30px] bg-sky-600 rounded-full overflow-hidden'>edit</button>
                     <button onClick={() => deleteTask(index)} className='w-[75px] h-[30px] bg-red-600 rounded-full overflow-hidden'>delete</button>
                   </div>
