@@ -2,8 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-
-*{
+* {
   background-color: rgb(13, 13, 46);
   color: white;
   font-family: monospace;
@@ -11,8 +10,7 @@
   margin: 0;
 }
 
-
-.taskcard{
+.taskcard {
   background-color: rgb(13, 13, 46);
   width: 250px;
   height: 250px;
@@ -24,11 +22,11 @@
   flex-direction: column;
 }
 
-.taskcard p{
+.taskcard p {
   background-color: transparent;
 }
 
+.jobsdone {
+  background-color: rgb(17, 139, 47);
 
-.jobsdone{
-  background-color: rgb(104, 236, 137);
 }

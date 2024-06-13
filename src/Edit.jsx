@@ -1,16 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const Edit = ({ selectedTask, updateTask, closeModal }) => {
-  // Initialize state for edited values
   const [editedTitle, setEditedTitle] = useState('');
   const [editedDesc, setEditedDesc] = useState('');
   const [editedDate, setEditedDate] = useState('');
 
-  // Store the initial values of id and status
   const taskIdHolder = useRef(selectedTask.id);
   const taskStatusHolder = useRef(selectedTask.status);
 
-  // Update state when selectedTask changes
   useEffect(() => {
     if (selectedTask) {
       setEditedTitle(selectedTask.title || '');
@@ -35,27 +32,22 @@ const Edit = ({ selectedTask, updateTask, closeModal }) => {
   };
 
   const saveChanges = () => {
-    // Create an updated task object with edited values
     const updatedTask = {
       id: taskIdHolder.current,
       title: editedTitle,
       desc: editedDesc,
       date: editedDate,
-      status: taskStatusHolder.current
+      status: taskStatusHolder.current,
     };
-    // Update the task in the task list with the updated task object
     updateTask(updatedTask);
-    // Close the modal
     closeModal();
   };
 
   return (
     <div>
-      <div className='bg-sky-600 flex flex-col justify-center content-center align-cente w-[600px] h-[500px] rounded-[15px] fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-65%]'>
+      <div className='bg-sky-600 flex flex-col justify-center content-center align-center w-[600px] h-[500px] rounded-[15px] fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-65%]'>
         <div className='bg-transparent text-center'>
-          <h1 className='bg-transparent text-[40px] font-bold mt-[25px]'>
-            Edit Task
-          </h1>
+          <h1 className='bg-transparent text-[40px] font-bold mt-[25px]'>Edit Task</h1>
         </div>
         <div className='bg-transparent self-center mt-[25px]'>
           <p className='bg-transparent text-[20px]'>Title: </p>
@@ -70,7 +62,6 @@ const Edit = ({ selectedTask, updateTask, closeModal }) => {
           />
 
           <p className='bg-transparent text-[20px]'>Description:</p>
-
           <input
             type='text'
             name='desc'
@@ -82,7 +73,6 @@ const Edit = ({ selectedTask, updateTask, closeModal }) => {
           />
 
           <p className='bg-transparent text-[20px]'>Select Date and Time: </p>
-
           <input
             type='datetime-local'
             name='date'
@@ -94,24 +84,12 @@ const Edit = ({ selectedTask, updateTask, closeModal }) => {
           />
         </div>
         <div className='bg-transparent self-center mt-[25px]'>
-          <button
-            onClick={saveChanges}
-            className='w-[100px] h-[50px] bg-green-400 rounded-full mr-[20px]'
-          >
-            Save Changes
-          </button>
-          <button
-            onClick={() => {
-              closeModal();
-            }}
-            className='w-[100px] h-[50px] bg-red-400 rounded-full'
-          >
-            Cancel
-          </button>
+          <button onClick={saveChanges} className='w-[100px] h-[50px] bg-green-400 rounded-full mr-[20px]'>Save Changes</button>
+          <button onClick={() => { closeModal(); }} className='w-[100px] h-[50px] bg-red-400 rounded-full'>Cancel</button>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Edit;
